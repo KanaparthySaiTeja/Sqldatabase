@@ -1,0 +1,23 @@
+create table employee_payroll
+(
+id int unsigned NOT NULL AUTO_INCREMENT,
+name VARCHAR(150) NOT NULL,
+salary Double not null,
+start DATE not null,
+primary key (id)
+);
+
+insert into employee_payroll (name, salary,start) values
+('Sai',1000.00, '2010-01-05'),
+('Teja',2000.00,'2005-11-13'),
+('Kiran',3000.00,'2001-04-21');
+
+select *from employee_payroll;
+select salary from employee_payroll where name='Sai';
+delete from employee_payroll where name='Sai';
+insert into employee_payroll (name,salary,start) values
+('Sai',10000.00,'2012-05-09');  
+select *from employee_payroll where start between cast('2005-01-01' as date)and date(now());
+alter table employee_payroll add gender char(1) after name;
+alter table employee_payroll drop gender;
+drop database payroll_services;
