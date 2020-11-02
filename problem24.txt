@@ -1,3 +1,5 @@
+create database payroll_service;
+select database();
 create table employee_payroll
 (
 id int unsigned NOT NULL AUTO_INCREMENT,
@@ -17,7 +19,63 @@ select salary from employee_payroll where name='Sai';
 delete from employee_payroll where name='Sai';
 insert into employee_payroll (name,salary,start) values
 ('Sai',10000.00,'2012-05-09');  
-select *from employee_payroll where start between cast('2005-01-01' as date)and date(now());
+select *from employee_payroll where start between 
+cast('2005-01-01' as date)and date(now());
 alter table employee_payroll add gender char(1) after name;
 alter table employee_payroll drop gender;
-drop database payroll_services;
+insert into employee_payroll (gender) values ('M','M','F');
+update employee_payroll set gender='M' where name='Sai' or name='Teja';
+update employee_payroll set gender='F' where  name='Kiran';
+ select * from employee_payroll;
+select sum(salary) from employee_payroll;
+select sum(salary) from employee_payroll where gender ='M' group by gender;
+select avg(salary) from employee_payroll;
+select count(salary) from employee_payroll;
+select max(salary) from employee_payroll;
+select min(salary) from employee_payroll;
+
+ALTER TABLE Employee_PayRoll ADD phone_no VARCHAR(100) After Name;
+ALTER TABLE Employee_PayRoll ADD Address VARCHAR(100) After phone_no;
+ALTER TABLE Employee_PayRoll ADD Department VARCHAR(100) NOT NULL After Address;
+ALTER TABLE Employee_PayRoll ALTER Address SET default 'TBD';
+
+
+ALTER TABLE Employee_PayRoll RENAME COLUMN salary to basic_pay;
+ALTER TABLE Employee_PayRoll ADD Deductions Double NOT NULL After basic_pay;
+ALTER TABLE Employee_PayRoll ADD taxable_pay Double NOT NULL After Deductions;
+ALTER TABLE Employee_PayRoll ADD income_tax double NOT NULL After taxable_pay;
+ALTER TABLE  Employee_PayRoll ADD net_pay double NOT NULL After income_tax;
+
+
+CREATE TABLE Dept (
+    id INT unsigned NOT NULL,
+    dept_name varchar(255) NOT NULL,
+	dept_id double NOT NULL,
+    primary key(dept_id),
+    foreign key(id) references Employee_PayRoll(id)
+    );
+
+
+INSERT INTO Employee_PayRoll (Name, phone_no,Address,Department,Gender,basic_pay,Deductions,taxable_pay,income_tax,net_pay,start)
+VALUES ('Alysse','9988998899','Michigan B-21','HR','F',0,0,0,0,0,'2018-04-19');
+
+select * from employee_payroll;
+
+SELECT COUNT(Gender)
+FROM Employee_PayRoll
+where Gender='F'
+GROUP BY Gender;
+
+select * from employee_payroll;
+
+SELECT COUNT(Gender)
+FROM Employee_PayRoll
+where Gender='M'
+GROUP BY Gender;
+
+select * from employee_payroll;
+
+Select basic_pay from Employee_PayRoll
+where start BETWEEN CAST('2018-01-01' AS DATE) AND DATE(NOW());    
+
+select * from employee_payroll;
